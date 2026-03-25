@@ -1,3 +1,4 @@
+import { asset } from '@/lib/utils'
 import { useSEO } from '@/hooks/useSEO'
 import SectionHeading from '@/components/SectionHeading'
 import GlowButton from '@/components/GlowButton'
@@ -142,7 +143,7 @@ export default function Trainingsplan12MonatePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
             <div className="rounded-2xl overflow-hidden shadow-card">
               <img
-                src="/images/trainingsplan-langzeit-s1.jpg"
+                src={asset('/images/trainingsplan-langzeit-s1.jpg')}
                 alt="Langzeit-Trainingsplan 3, 6 und 12 Monate — Seite 1"
                 className="w-full h-auto"
                 loading="lazy"
@@ -150,7 +151,7 @@ export default function Trainingsplan12MonatePage() {
             </div>
             <div className="rounded-2xl overflow-hidden shadow-card">
               <img
-                src="/images/trainingsplan-langzeit-s2.jpg"
+                src={asset('/images/trainingsplan-langzeit-s2.jpg')}
                 alt="Langzeit-Trainingsplan 3, 6 und 12 Monate — Seite 2"
                 className="w-full h-auto"
                 loading="lazy"
@@ -180,7 +181,7 @@ export default function Trainingsplan12MonatePage() {
 
             <div className="space-y-4">
               <img
-                src="/images/trainingsplan-smartphone.jpg"
+                src={asset('/images/trainingsplan-smartphone.jpg')}
                 alt="PassengerGuard Trainingsplan auf dem Smartphone"
                 className="w-full rounded-2xl shadow-card"
                 loading="lazy"

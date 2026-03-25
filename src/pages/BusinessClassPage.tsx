@@ -1,3 +1,4 @@
+import { asset } from '@/lib/utils'
 import { Brain, Target, Building, WifiOff, Check } from 'lucide-react'
 import { useSEO } from '@/hooks/useSEO'
 import GlowButton from '@/components/GlowButton'
@@ -76,7 +77,7 @@ export default function BusinessClassPage() {
 
             <AnimatedSection delay={0.15}>
               <img
-                src="/images/business-vielflieger.webp"
+                src={asset('/images/business-vielflieger.webp')}
                 alt="Geschäftsreisende nutzen PassengerGuard im Flugzeug"
                 className="w-full rounded-2xl shadow-card"
               />
@@ -130,7 +131,7 @@ export default function BusinessClassPage() {
             <AnimatedSection>
               <div className="rounded-2xl overflow-hidden shadow-card">
                 <img
-                  src="/images/man-verzweifelt.png"
+                  src={asset('/images/man-verzweifelt.png')}
                   alt="Geschäftsreisender mit Flugangst — Stress und Verzweiflung"
                   className="w-full h-auto"
                   loading="lazy"
@@ -225,7 +226,7 @@ export default function BusinessClassPage() {
 
             <AnimatedSection delay={0.15}>
               <img
-                src="/images/kognitive-verhaltenstherapie.png"
+                src={asset('/images/kognitive-verhaltenstherapie.png')}
                 alt="Kognitive Verhaltenstherapie — Kreislauf aus Gedanken, Gefühlen und Verhalten"
                 className="w-full rounded-2xl shadow-card"
                 loading="lazy"

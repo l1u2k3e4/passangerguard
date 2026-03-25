@@ -1,3 +1,4 @@
+import { asset } from '@/lib/utils'
 import { useSEO } from '@/hooks/useSEO'
 import SectionHeading from '@/components/SectionHeading'
 import GlowButton from '@/components/GlowButton'
@@ -121,7 +122,7 @@ export default function Trainingsplan1WochePage() {
             {/* Bild links */}
             <div className="rounded-2xl overflow-hidden shadow-card">
               <img
-                src="/images/trainingsplan-1woche.jpg"
+                src={asset('/images/trainingsplan-1woche.jpg')}
                 alt="Flugangst Trainingsplan 1 Woche (intensiv) — Ausdruckbarer Plan"
                 className="w-full h-auto"
                 loading="lazy"

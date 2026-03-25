@@ -1,4 +1,5 @@
 import AnimatedSection from '@/components/AnimatedSection'
+import { asset } from '@/lib/utils'
 
 export default function TrustBarSection() {
   return (
@@ -11,7 +12,7 @@ export default function TrustBarSection() {
 
           {/* Große Montage-Grafik mit allen Medienlogos */}
           <img
-            src="/images/bekannt-aus-montage.png"
+            src={asset('/images/bekannt-aus-montage.png')}
             alt="PassengerGuard bekannt aus WDR, RTL, WAZ, NRZ, myself und weiteren Medien"
             className="w-full max-w-3xl mx-auto"
             loading="lazy"

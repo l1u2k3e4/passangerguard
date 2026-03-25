@@ -1,3 +1,4 @@
+import { asset } from '@/lib/utils'
 import { useMemo } from 'react'
 import { CheckCircle } from 'lucide-react'
 import { useSEO } from '@/hooks/useSEO'
@@ -40,7 +41,7 @@ export default function FlugangstPage() {
       <ContentPageHero
         title={c.hero.title}
         subtitle={c.hero.subtitle}
-        backgroundImage="/images/flugangst-verstehen.jpg"
+        backgroundImage={asset('/images/flugangst-verstehen.jpg')}
       />
 
       <div className="max-w-wide mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
@@ -111,7 +112,7 @@ export default function FlugangstPage() {
                   {sectionIndex === 0 && (
                     <div className="my-10 rounded-card overflow-hidden shadow-soft">
                       <img
-                        src="/images/passenger-calm.jpg"
+                        src={asset('/images/passenger-calm.jpg')}
                         alt="Entspannter Passagier im Flugzeug"
                         loading="lazy"
                         width={700}
@@ -125,7 +126,7 @@ export default function FlugangstPage() {
                   {sectionIndex === 2 && (
                     <div className="my-10 rounded-card overflow-hidden shadow-soft">
                       <img
-                        src="/images/turbulence.jpg"
+                        src={asset('/images/turbulence.jpg')}
                         alt="Turbulenzen verstehen — Flugangst überwinden"
                         loading="lazy"
                         width={700}

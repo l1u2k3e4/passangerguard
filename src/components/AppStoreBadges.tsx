@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn, asset } from '@/lib/utils'
 
 interface AppStoreBadgesProps {
   size?: 'sm' | 'md' | 'lg'
@@ -20,7 +20,7 @@ export default function AppStoreBadges({ size = 'md', className }: AppStoreBadge
         rel="noopener noreferrer"
       >
         <img
-          src="/images/app-store-badge.png"
+          src={asset('/images/app-store-badge.png')}
           alt="Im App Store laden"
           className={cn(sizeMap[size], 'w-auto')}
         />
@@ -31,7 +31,7 @@ export default function AppStoreBadges({ size = 'md', className }: AppStoreBadge
         rel="noopener noreferrer"
       >
         <img
-          src="/images/google-play-badge.png"
+          src={asset('/images/google-play-badge.png')}
           alt="Bei Google Play laden"
           className={cn(sizeMap[size], 'w-auto')}
         />

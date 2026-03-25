@@ -1,3 +1,4 @@
+import { asset } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import {
   Check,
@@ -126,20 +127,20 @@ export default function AppPage() {
             >
               {/* Hauptscreen zentral */}
               <img
-                src="/images/screen-training.jpg"
+                src={asset('/images/screen-training.jpg')}
                 alt="PassengerGuard App Startbildschirm"
                 className="w-64 md:w-72 lg:w-80 mx-auto rounded-3xl shadow-2xl relative z-10"
                 loading="lazy"
               />
               {/* Seitliche Screenshots leicht versetzt */}
               <img
-                src="/images/screen-home.jpg"
+                src={asset('/images/screen-home.jpg')}
                 alt="PassengerGuard Training-Modul"
                 className="absolute -left-4 top-8 w-48 md:w-56 lg:w-64 rounded-2xl shadow-xl -rotate-6 opacity-90"
                 loading="lazy"
               />
               <img
-                src="/images/screen-kopfflug.jpg"
+                src={asset('/images/screen-kopfflug.jpg')}
                 alt="PassengerGuard Kopfflug-Simulation"
                 className="absolute -right-4 top-8 w-48 md:w-56 lg:w-64 rounded-2xl shadow-xl rotate-6 opacity-90"
                 loading="lazy"
@@ -233,7 +234,7 @@ export default function AppPage() {
             <AnimatedSection delay={0.2}>
               <div className="rounded-card overflow-hidden shadow-card">
                 <img
-                  src="/images/trainingsplan-rub.jpg"
+                  src={asset('/images/trainingsplan-rub.jpg')}
                   alt="Trainingsplan Ruhr-Universität Bochum"
                   loading="lazy"
                   width={600}

@@ -3,6 +3,7 @@ import { Check } from 'lucide-react'
 import { homeContent } from '@/data/homeContent'
 import GlowButton from '@/components/GlowButton'
 import AppStoreBadges from '@/components/AppStoreBadges'
+import { asset } from '@/lib/utils'
 import TrustBadge from '@/components/TrustBadge'
 import { GraduationCap } from 'lucide-react'
 
@@ -77,7 +78,7 @@ export default function HeroSection() {
             >
               <div className="absolute inset-0 bg-brand-primary/10 rounded-3xl blur-2xl scale-90" />
               <img
-                src="/images/hero-app-mockup.png"
+                src={asset('/images/hero-app-mockup.png')}
                 alt="PassengerGuard App — Dein Flugangst-Coach"
                 loading="eager"
                 fetchPriority="high"

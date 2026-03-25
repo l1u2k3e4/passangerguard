@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronDown } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, asset } from '@/lib/utils'
 
 interface NavChild {
   label: string
@@ -125,7 +125,7 @@ export default function Navigation() {
         {/* Logo */}
         <Link to="/" className="flex-shrink-0">
           <img
-            src="/images/logo-wide.png"
+            src={asset('/images/logo-wide.png')}
             alt="PassengerGuard"
             className="h-10 w-auto"
           />

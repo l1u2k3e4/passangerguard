@@ -1,3 +1,4 @@
+import { asset } from '@/lib/utils'
 import { Check } from 'lucide-react'
 import { useSEO } from '@/hooks/useSEO'
 import SectionHeading from '@/components/SectionHeading'
@@ -135,7 +136,7 @@ export default function Trainingsplan3MonatePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
             <div className="rounded-2xl overflow-hidden shadow-card">
               <img
-                src="/images/trainingsplan-rub-s1.jpg"
+                src={asset('/images/trainingsplan-rub-s1.jpg')}
                 alt="Flugangst-Trainingsplan Ruhr-Universität Bochum Seite 1"
                 className="w-full h-auto"
                 loading="lazy"
@@ -143,7 +144,7 @@ export default function Trainingsplan3MonatePage() {
             </div>
             <div className="rounded-2xl overflow-hidden shadow-card">
               <img
-                src="/images/trainingsplan-rub-s2.jpg"
+                src={asset('/images/trainingsplan-rub-s2.jpg')}
                 alt="Flugangst-Trainingsplan Ruhr-Universität Bochum Seite 2"
                 className="w-full h-auto"
                 loading="lazy"
@@ -203,7 +204,7 @@ export default function Trainingsplan3MonatePage() {
             {/* KVT-Kreislauf-Bild rechts */}
             <div className="rounded-2xl overflow-hidden shadow-card">
               <img
-                src="/images/kognitive-verhaltenstherapie.png"
+                src={asset('/images/kognitive-verhaltenstherapie.png')}
                 alt="Kognitive Verhaltenstherapie — Kreislauf aus Gedanken, Gefühlen und Verhalten"
                 className="w-full h-auto"
                 loading="lazy"
@@ -220,7 +221,7 @@ export default function Trainingsplan3MonatePage() {
             {/* App-KVT-Bild links */}
             <div className="rounded-2xl overflow-hidden shadow-card">
               <img
-                src="/images/kvt-passengerguard.png"
+                src={asset('/images/kvt-passengerguard.png')}
                 alt="PassengerGuard App — Kognitive Verhaltenstherapie digital"
                 className="w-full h-auto"
                 loading="lazy"

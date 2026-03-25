@@ -1,3 +1,5 @@
+import { asset } from '@/lib/utils'
+
 export const homeContent = {
   hero: {
     tag: 'Wissenschaftlich geprüft · Ruhr-Universität Bochum',
@@ -40,19 +42,19 @@ export const homeContent = {
     title: 'PassengerGuard — Dein Flugangst-Coach für die Hosentasche',
     blocks: [
       {
-        image: '/images/screen-training.jpg',
+        image: asset('/images/screen-training.jpg'),
         title: 'Vorbereitung & mentale Sicherheit',
         text: 'Bereite dich mit strukturierten Trainingseinheiten auf deinen Flug vor. In weniger als 10 Sitzungen lernst du, deine Angstauslöser zu erkennen und zu bewältigen.',
         icon: 'Shield' as const,
       },
       {
-        image: '/images/screen-meditation.jpg',
+        image: asset('/images/screen-meditation.jpg'),
         title: 'Beruhigung & Kontrolle behalten',
         text: 'Atemübungen, Meditationen und Entspannungstechniken helfen dir, am Gate und beim Boarding ruhig zu bleiben.',
         icon: 'Heart' as const,
       },
       {
-        image: '/images/screen-kopfflug.jpg',
+        image: asset('/images/screen-kopfflug.jpg'),
         title: 'Akuthilfe bei Panikattacken',
         text: 'Beruhigende Atemtechniken und gezielte Übungen, die in nur 30 Sekunden wirken — und das alles funktioniert auch im Flugmodus.',
         icon: 'Plane' as const,
@@ -130,7 +132,7 @@ export const homeContent = {
         'Die App hat mir die Flugangst genommen! Ohne PassengerGuard wäre ich heute nicht ins Flugzeug gestiegen.',
       context:
         'Christian, 41, hatte jahrelang das Fliegen vermieden. Nach 3 Monaten Training mit PassengerGuard absolvierte er seinen ersten Flug im Rahmen der wissenschaftlichen Studie der Ruhr-Universität Bochum.',
-      image: '/images/christian-training.jpg',
+      image: asset('/images/christian-training.jpg'),
     },
     reviews: [
       {
@@ -215,9 +217,9 @@ export const homeContent = {
     title: 'PassengerGuard in der Presse',
     text: 'PassengerGuard wurde bereits in zahlreichen Medien vorgestellt — darunter WDR, RTL, 1Live, Radio Vest, WAZ, Berliner Morgenpost und MySelf.',
     items: [
-      { image: '/images/wdr-bericht.jpg', label: 'WDR Fernsehen' },
-      { image: '/images/rtl-bericht.jpg', label: 'RTL' },
-      { image: '/images/bekannt-aus.png', label: 'Bekannt aus' },
+      { image: asset('/images/wdr-bericht.jpg'), label: 'WDR Fernsehen' },
+      { image: asset('/images/rtl-bericht.jpg'), label: 'RTL' },
+      { image: asset('/images/bekannt-aus.png'), label: 'Bekannt aus' },
     ],
   },
 

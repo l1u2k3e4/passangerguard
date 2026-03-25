@@ -3,7 +3,6 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import ChatWidget from '@/components/ChatWidget'
 import CookieBanner from '@/components/CookieBanner'
-import StickyCta from '@/components/StickyCta'
 
 export default function SharedLayout() {
   return (
@@ -20,7 +19,6 @@ export default function SharedLayout() {
       </main>
       <Footer />
       <ChatWidget />
-      <StickyCta />
       <CookieBanner />
     </div>
   )

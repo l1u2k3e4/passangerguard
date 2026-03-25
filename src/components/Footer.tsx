@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Instagram } from 'lucide-react'
 import AppStoreBadges from './AppStoreBadges'
+import { asset } from '@/lib/utils'
 
 const footerLinks = {
   flugangst: [
@@ -61,7 +62,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-4">
               <img
-                src="/images/logo-wide.png"
+                src={asset('/images/logo-wide.png')}
                 alt="PassengerGuard"
                 className="h-8 w-auto"
               />

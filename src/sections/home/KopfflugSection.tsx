@@ -2,6 +2,7 @@ import { Check } from 'lucide-react'
 import GlowButton from '@/components/GlowButton'
 import AnimatedSection from '@/components/AnimatedSection'
 import { homeContent } from '@/data/homeContent'
+import { asset } from '@/lib/utils'
 
 const c = homeContent.kopfflug
 
@@ -45,7 +46,7 @@ export default function KopfflugSection() {
           {/* Right — App Screenshot */}
           <AnimatedSection delay={0.2} className="flex justify-center">
             <img
-              src="/images/screen-kopfflug.jpg"
+              src={asset('/images/screen-kopfflug.jpg')}
               alt="PassengerGuard Kopfflug — Mentale Flugsimulation"
               className="w-full max-w-md mx-auto rounded-2xl shadow-card"
               loading="lazy"
