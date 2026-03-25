@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /agb
-Disallow: /nutzungsbedingungen
-Disallow: /rechtlicher-hinweis
-
-Sitemap: https://www.passengerguard.com/sitemap.xml
