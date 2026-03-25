@@ -1,6 +1,36 @@
 import { useEffect } from 'react'
+import DOMPurify from 'dompurify'
+import { marked } from 'marked'
 
-function injectChatWidget() {
+// ====== Konfigurationstypen ======
+interface ChatWidgetConfig {
+  webhook: { url: string; route: string }
+  branding: { logo: string; name: string; welcomeText: string; responseTimeText: string }
+  style: { primaryColor: string; secondaryColor: string; position: string; backgroundColor: string; fontColor: string }
+}
+
+// ====== Sicherheits-Hilfsfunktionen ======
+const HEX_COLOR_RE = /^#[0-9a-fA-F]{3,8}$/
+const MAX_MESSAGE_LENGTH = 1000
+const RATE_LIMIT_MS = 2000
+
+function sanitizeColor(value: string, fallback: string): string {
+  return HEX_COLOR_RE.test(value) ? value : fallback
+}
+
+function renderMarkdown(text: string): string {
+  try {
+    const raw = marked.parse(text, { breaks: true, async: false }) as string
+    return DOMPurify.sanitize(raw, {
+      ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'a', 'ul', 'ol', 'li', 'code', 'pre', 'h1', 'h2', 'h3', 'blockquote'],
+      ALLOWED_ATTR: ['href', 'target', 'rel'],
+    })
+  } catch {
+    return DOMPurify.sanitize(text)
+  }
+}
+
+function injectChatWidget(config: ChatWidgetConfig) {
   // Verhindere doppeltes Laden
   if (document.querySelector('.af-chat')) return
 
@@ -10,19 +40,19 @@ function injectChatWidget() {
 
   const $ = (sel: string, root: Element | Document = document) => root.querySelector(sel)
 
-  const cfg = // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).ChatWidgetConfig as Record<string, Record<string, string>> | undefined
-  const webhookUrl   = cfg?.webhook?.url   || ""
-  const webhookRoute = cfg?.webhook?.route  || "general"
-  const brandName    = cfg?.branding?.name            || "Chat"
-  const logoUrl      = cfg?.branding?.logo            || ""
-  const welcomeText  = cfg?.branding?.welcomeText     || "Willkommen! Wie können wir Ihnen helfen?"
-  const responseTime = cfg?.branding?.responseTimeText || ""
-  const primary = cfg?.style?.primaryColor    || "#2563EB"
-  const accent  = cfg?.style?.secondaryColor  || "#06B6D4"
-  const bgColor = cfg?.style?.backgroundColor || "#f4f5f7"
-  const font    = cfg?.style?.fontColor       || "#0F172A"
-  const pos     = (cfg?.style?.position || "right").toLowerCase() === "left" ? "left" : "right"
+  const webhookUrl   = config.webhook.url
+  const webhookRoute = config.webhook.route
+  const brandName    = config.branding.name
+  const logoUrl      = config.branding.logo
+  const welcomeText  = config.branding.welcomeText
+  const responseTime = config.branding.responseTimeText
+
+  // Farben validieren (CSS-Injection verhindern)
+  const primary = sanitizeColor(config.style.primaryColor, '#2563EB')
+  const accent  = sanitizeColor(config.style.secondaryColor, '#06B6D4')
+  const bgColor = sanitizeColor(config.style.backgroundColor, '#f4f5f7')
+  const font    = sanitizeColor(config.style.fontColor, '#0F172A')
+  const pos     = config.style.position.toLowerCase() === "left" ? "left" : "right"
 
   // ====== CSS ======
   const css = `
@@ -115,7 +145,7 @@ function injectChatWidget() {
           <div class="af-typing" aria-label="Schreibt\u2026"><span></span><span></span><span></span></div>
         </div>
         <div class="af-composer">
-          <input class="af-input" type="text" placeholder="Deine Frage zu Flugangst \u2026" aria-label="Nachricht eingeben" />
+          <input class="af-input" type="text" placeholder="Deine Frage zu Flugangst \u2026" aria-label="Nachricht eingeben" maxlength="${MAX_MESSAGE_LENGTH}" />
           <button class="af-send" type="button">Senden</button>
         </div>
         <div class="af-footer">Powered by ${esc(brandName)}</div>
@@ -142,16 +172,6 @@ function injectChatWidget() {
   if (!sessionId) {
     sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)
     sessionStorage.setItem("af_session", sessionId)
-  }
-
-  // ====== Markdown Rendering ======
-  function renderMarkdown(text: string): string {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const w = window as any
-    if (typeof w.marked !== "undefined" && w.marked.parse) {
-      try { return w.marked.parse(text, { breaks: true }) } catch { /* fallback */ }
-    }
-    return esc(text).replace(/\n/g, "<br>")
   }
 
   // ====== Message hinzufügen ======
@@ -200,10 +220,18 @@ function injectChatWidget() {
     window.visualViewport.addEventListener("scroll", hvr)
   }
 
+  // ====== Rate Limiting ======
+  let lastSentAt = 0
+
   // ====== Message senden ======
   async function sendMessage() {
-    const text = input.value.trim()
+    const now = Date.now()
+    if (now - lastSentAt < RATE_LIMIT_MS) return
+
+    const text = input.value.trim().slice(0, MAX_MESSAGE_LENGTH)
     if (!text) return
+
+    lastSentAt = now
     addMsg(text, "user")
     input.value = ""
     input.focus()
@@ -273,50 +301,37 @@ export default function ChatWidget() {
       document.head.appendChild(fontLink)
     }
 
-    // 2. Marked.js für Markdown-Support laden
-    if (!document.querySelector('script[src*="marked"]')) {
-      const markedScript = document.createElement('script')
-      markedScript.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js'
-      document.head.appendChild(markedScript)
-    }
-
-    // 3. Widget-Config setzen
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(window as any).ChatWidgetConfig = {
-      webhook: {
-        url: 'https://n8n.srv1233417.hstgr.cloud/webhook/ec82e229-3374-4837-b059-25cb28cf9d02/chat',
+    // 2. Widget-Config (frozen, nicht manipulierbar)
+    const config: ChatWidgetConfig = Object.freeze({
+      webhook: Object.freeze({
+        url: import.meta.env.VITE_WEBHOOK_URL || 'https://n8n.srv1233417.hstgr.cloud/webhook/ec82e229-3374-4837-b059-25cb28cf9d02/chat',
         route: 'general'
-      },
-      branding: {
+      }),
+      branding: Object.freeze({
         logo: 'https://www.passengerguard.com/wp-content/uploads/2024/04/PG-Logo_600x600.png',
         name: 'PassengerGuard',
         welcomeText: 'Hallo! \u{1F44B} Wie kann ich dir bei deiner Flugangst helfen?',
         responseTimeText: 'Dein Flugangst-Assistent'
-      },
-      style: {
+      }),
+      style: Object.freeze({
         primaryColor: '#2563EB',
         secondaryColor: '#06B6D4',
         position: 'right',
         backgroundColor: '#f4f5f7',
         fontColor: '#0F172A'
-      }
-    }
+      })
+    })
 
-    // 4. Widget-Script injizieren (kurz verzögert, damit marked.js geladen ist)
-    const timer = setTimeout(() => {
-      injectChatWidget()
-    }, 500)
+    // 3. Widget direkt injizieren (marked ist jetzt gebundelt, kein CDN nötig)
+    injectChatWidget(config)
 
     return () => {
-      clearTimeout(timer)
-      // Cleanup: Widget-DOM entfernen bei Unmount
       const widgetRoot = document.querySelector('.af-chat')
       if (widgetRoot) widgetRoot.remove()
-      // Style-Tag entfernen
       const styleTag = document.getElementById('af-chat-styles')
       if (styleTag) styleTag.remove()
     }
   }, [])
 
-  return null // Widget wird direkt ins DOM injiziert
+  return null
 }
